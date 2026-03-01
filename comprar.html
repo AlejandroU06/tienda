@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Checkout - NexusStore</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+
+
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+    <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-4">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="bg-primary size-8 rounded flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-xl">storefront</span>
+                </div>
+                <span class="text-xl font-bold tracking-tight">NexusStore</span>
+            </div>
+            <a class="text-sm font-medium text-slate-500 hover:text-primary flex items-center gap-1 transition-colors"
+                href="carrito.html">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Back to Cart
+            </a>
+        </div>
+    </header>
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-8">
+                <div class="mb-12">
+                    <div class="flex items-center justify-between max-w-md mx-auto relative">
+                        <div
+                            class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2 -z-10">
+                        </div>
+                        <div
+                            class="absolute top-1/2 left-0 w-1/2 h-0.5 bg-primary -translate-y-1/2 -z-10 transition-all duration-500">
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div
+                                class="size-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm ring-4 ring-white dark:ring-slate-900">
+                                <span class="material-symbols-outlined text-xl">local_shipping</span>
+                            </div>
+                            <span class="text-xs font-bold text-primary">Shipping</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div
+                                class="size-10 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-400 flex items-center justify-center font-bold text-sm ring-4 ring-white dark:ring-slate-900">
+                                <span class="material-symbols-outlined text-xl">payments</span>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400">Payment</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div
+                                class="size-10 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-400 flex items-center justify-center font-bold text-sm ring-4 ring-white dark:ring-slate-900">
+                                <span class="material-symbols-outlined text-xl">fact_check</span>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400">Review</span>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h2 class="text-2xl font-bold mb-8">Shipping Information</h2>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">First
+                                    Name</label>
+                                <input class="w-full" placeholder="John" type="text" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Last
+                                    Name</label>
+                                <input class="w-full" placeholder="Doe" type="text" />
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Street
+                                Address</label>
+                            <input class="w-full" placeholder="123 Shopping Ave, Suite 4B" type="text" />
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">City</label>
+                                <input class="w-full" placeholder="New York" type="text" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">State /
+                                    Province</label>
+                                <select class="w-full">
+                                    <option>New York</option>
+                                    <option>California</option>
+                                    <option>Texas</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">ZIP Code</label>
+                                <input class="w-full" placeholder="10001" type="text" />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone
+                                    Number</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">call</span>
+                                    <input class="w-full pl-10" placeholder="+1 (555) 000-0000" type="tel" />
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Email
+                                    Address</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">mail</span>
+                                    <input class="w-full pl-10" placeholder="john@example.com" type="email" />
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <input class="rounded border-slate-300 text-primary focus:ring-primary" id="save-info"
+                                    type="checkbox" />
+                                <label class="text-sm text-slate-500" for="save-info">Save this information for next
+                                    time</label>
+                            </div>
+                            <button
+                                class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-bold text-sm shadow-lg shadow-primary/20 transition-all flex items-center gap-2"
+                                type="submit">
+                                Continue to Payment
+                                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="lg:col-span-4">
+                <div class="sticky top-8 space-y-4">
+                    <div
+                        class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div
+                            class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <h3 class="font-bold">Order Summary</h3>
+                            <span class="text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded font-bold">3
+                                Items</span>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="size-12 rounded bg-slate-100 dark:bg-slate-800 bg-cover bg-center shrink-0"
+                                    style="background-image: url('assets/imágenes/prueba.jpg')"></div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-bold truncate">Premium Air Sneakers</p>
+                                    <p class="text-xs text-slate-500">Size: 42 • Qty: 1</p>
+                                </div>
+                                <span class="text-sm font-bold">$120.00</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="size-12 rounded bg-slate-100 dark:bg-slate-800 bg-cover bg-center shrink-0"
+                                    style="background-image: url('assets/imágenes/prueba.jpg')"></div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-bold truncate">Wireless Headphones</p>
+                                    <p class="text-xs text-slate-500">Color: Black • Qty: 1</p>
+                                </div>
+                                <span class="text-sm font-bold">$199.99</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-slate-50 dark:bg-slate-900/50 space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Subtotal</span>
+                                <span class="font-medium">$319.99</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Shipping</span>
+                                <span class="font-medium text-emerald-600">Free</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Estimated Tax</span>
+                                <span class="font-medium">$25.60</span>
+                            </div>
+                            <div class="pt-3 border-t border-slate-200 dark:border-slate-700 flex justify-between">
+                                <span class="font-bold">Total</span>
+                                <span class="text-xl font-black text-primary">$345.59</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 flex items-center justify-center gap-6 text-slate-400">
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-lg">verified_user</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider">Secure Payment</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-lg">sync</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider">30-Day Returns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="mt-auto py-8 text-center border-t border-slate-200 dark:border-slate-800">
+        <p class="text-xs text-slate-400 font-medium">© 2024 NexusStore. All rights reserved.</p>
+    </footer>
+
+
+    <script type="module" src="js/comprar.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

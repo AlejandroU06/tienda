@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Browse Product Categories - NexusStore</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+    <div class="flex h-screen overflow-hidden">
+        <aside
+            class="w-64 flex-shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col">
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="bg-primary size-10 rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+                    </div>
+                    <div>
+                        <h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-none">NexusStore</h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">Customer Portal</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 space-y-1">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    href="index.html">
+                    <span class="material-symbols-outlined text-[24px]">home</span>
+                    <span class="text-sm font-medium">Home</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold"
+                    href="categorias.html">
+                    <span class="material-symbols-outlined text-[24px]">category</span>
+                    <span class="text-sm">Categories</span>
+                </a>
+
+
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    href="ordenes.html">
+                    <span class="material-symbols-outlined text-[24px]">history</span>
+                    <span class="text-sm font-medium">Orders</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+                <div class="flex items-center gap-3 p-2">
+                    <div
+                        class="size-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-sm font-bold truncate">Invitado</p>
+                        <p class="text-xs text-slate-500 truncate">Visitante</p>
+                    </div>
+                    <a href="login.html"><span
+                            class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">login</span></a>
+                </div>
+            </div>
+        </aside>
+        <main class="flex-1 flex flex-col overflow-hidden">
+            <header
+                class="h-16 flex-shrink-0 flex items-center justify-between px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+                <div class="flex items-center gap-4 flex-1">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Browse Product Categories</h2>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="relative group">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                        <input
+                            class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/20 transition-all"
+                            placeholder="Search categories..." type="text" />
+                    </div>
+                    <div class="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
+
+
+                    <a href="login.html" id="header-login-link"
+                        class="hidden text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+                        Sign In
+                    </a>
+                    <a href="carrito.html"
+                        class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                        Cart (0)
+                    </a>
+                </div>
+            </header>
+            <div class="flex-1 overflow-y-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-2xl font-black text-slate-900 dark:text-white">Shop by Department</h3>
+                            <p class="text-slate-500 dark:text-slate-400 mt-1">Explore our wide range of curated
+                                collections</p>
+                        </div>
+                        <div
+                            class="flex items-center gap-2 text-sm font-bold text-primary cursor-pointer hover:underline">
+                            View all sub-categories
+                            <span class="material-symbols-outlined text-[18px]">arrow_right_alt</span>
+                        </div>
+                    </div>
+                    <div id="categories-grid"
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Dynamic categories will be loaded here -->
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script type="module" src="js/categorias.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

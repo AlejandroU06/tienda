@@ -1,0 +1,42 @@
+@layer base {
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    select {
+        @apply bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary text-sm;
+    }
+}
+
+/* Toast Animations */
+@keyframes toast-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toast-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.animate-slide-in {
+    animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-out {
+    animation: toast-out 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
