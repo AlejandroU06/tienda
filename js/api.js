@@ -122,3 +122,18 @@ export async function insertarDetalleVenta(detalleData) {
         throw error;
     }
 }
+
+export async function getDetalleVenta(ventaId) {
+    try {
+        const url = `${API_URL}/rest/v1/detalle_venta?id_venta=eq.${encodeURIComponent(ventaId)}&select=*,producto(nombre,precio)`;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+        });
+        if (!response.ok) throw new Error('Error al consultar detalle de venta');
+        return await response.json();
+    } catch (error) {
+        console.error('getDetalleVenta error:', error);
+        throw error;
+    }
+}

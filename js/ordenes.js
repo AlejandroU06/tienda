@@ -42,10 +42,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <p class="text-xs text-slate-400 uppercase font-bold tracking-tight">Total</p>
                             <p class="text-lg font-black text-slate-900 dark:text-slate-100">$${order.total}</p>
                         </div>
-                        <button class="px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-sm font-bold transition-all">
+                        <button class="view-details-btn px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-sm font-bold transition-all">
                             Ver Detalles
                         </button>
                     </div>`;
+
+                const viewBtn = card.querySelector('.view-details-btn');
+                viewBtn.addEventListener('click', () => showOrderDetails(order, orders.length - index));
+
                 container.appendChild(card);
             });
         } catch (e) {
@@ -53,4 +57,94 @@ document.addEventListener("DOMContentLoaded", async () => {
             container.innerHTML = '<p class="text-red-500 py-12 text-center">Error al cargar las órdenes.</p>';
         }
     }
+
+    // Modal elements
+    const modal = document.getElementById('order-modal');
+    const modalContent = modal?.querySelector('div > div');
+    const closeBtns = [document.getElementById('close-modal'), document.getElementById('close-modal-btn')];
+    const itemsContainer = document.getElementById('modal-items-container');
+
+    async function showOrderDetails(order, orderNum) {
+        if (!modal || !itemsContainer) return;
+
+        // Reset and show loading
+        itemsContainer.innerHTML = '<p class="text-slate-500 py-8 text-center">Cargando detalles...</p>';
+        document.getElementById('modal-order-number').textContent = `Detalles de la Orden #${orderNum}`;
+        document.getElementById('modal-order-date').textContent = new Date(order.fecha).toLocaleDateString();
+        document.getElementById('modal-order-total').textContent = `$${order.total}`;
+
+        // Populate Status and Payment
+        const statusEl = document.getElementById('modal-order-status');
+        const paymentEl = document.getElementById('modal-order-payment');
+
+        if (statusEl) {
+            statusEl.textContent = order.estado || 'Pendiente';
+            // Apply colors based on status
+            const status = (order.estado || '').toUpperCase();
+            statusEl.className = 'inline-flex px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ';
+            if (status === 'PAGADA' || status === 'COMPLETADA' || status === 'DELIVERED') {
+                statusEl.classList.add('bg-emerald-100', 'text-emerald-700');
+            } else if (status === 'PENDIENTE' || status === 'PENDING') {
+                statusEl.classList.add('bg-amber-100', 'text-amber-700');
+            } else if (status === 'CANCELADA' || status === 'CANCELLED') {
+                statusEl.classList.add('bg-red-100', 'text-red-700');
+            } else {
+                statusEl.classList.add('bg-slate-100', 'text-slate-600');
+            }
+        }
+
+        if (paymentEl) {
+            paymentEl.textContent = order.metodo_pago || 'No especificado';
+        }
+
+        // Show modal with animation
+        modal.classList.remove('pointer-events-none', 'opacity-0');
+        modal.classList.add('opacity-100');
+        modalContent?.classList.remove('scale-95');
+        modalContent?.classList.add('scale-100');
+
+        try {
+            const idVenta = order.id_venta || order.id;
+            const details = await db.getDetalleVenta(idVenta);
+
+            if (!details || details.length === 0) {
+                itemsContainer.innerHTML = '<p class="text-slate-500 py-8 text-center">No se encontraron productos para esta orden.</p>';
+                return;
+            }
+
+            itemsContainer.innerHTML = '';
+            details.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-800";
+                itemDiv.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">shopping_bag</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900 dark:text-slate-100">${item.producto?.nombre || 'Producto'}</p>
+                            <p class="text-xs text-slate-500">Cantidad: ${item.cantidad} • Precio: $${item.precio_unitario || item.producto?.precio}</p>
+                        </div>
+                    </div>
+                    <p class="font-black text-slate-900 dark:text-slate-100">$${(item.cantidad * (item.precio_unitario || item.producto?.precio)).toFixed(2)}</p>
+                `;
+                itemsContainer.appendChild(itemDiv);
+            });
+        } catch (error) {
+            console.error(error);
+            itemsContainer.innerHTML = '<p class="text-red-500 py-8 text-center">Error al cargar los detalles.</p>';
+        }
+    }
+
+    function closeModal() {
+        modal?.classList.add('opacity-0', 'pointer-events-none');
+        modal?.classList.remove('opacity-100');
+        modalContent?.classList.add('scale-95');
+        modalContent?.classList.remove('scale-100');
+    }
+
+    closeBtns.forEach(btn => btn?.addEventListener('click', closeModal));
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
 });
