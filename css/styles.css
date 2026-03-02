@@ -1,11 +1,31 @@
-@layer base {
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    transition: all 0.2s;
+}
 
-    input[type="text"],
-    input[type="tel"],
-    input[type="email"],
-    select {
-        @apply bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary text-sm;
-    }
+.dark input[type="text"],
+.dark input[type="tel"],
+.dark input[type="email"],
+.dark select {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+select:focus {
+    outline: none;
+    border-color: #137fec;
+    box-shadow: 0 0 0 3px rgba(19, 127, 236, 0.2);
 }
 
 /* Toast Animations */
@@ -39,4 +59,39 @@
 
 .animate-slide-out {
     animation: toast-out 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Responsive Sidebar & Overlay */
+#sidebar-overlay {
+    transition: opacity 0.3s ease-in-out;
+}
+
+aside {
+    transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 767px) {
+    aside {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 50;
+        transform: translateX(-100%);
+        display: flex !important;
+        /* Force flex when on mobile to override Tailwind's hidden class when needed */
+    }
+
+    aside.sidebar-open {
+        transform: translateX(0);
+    }
+
+    header h2 {
+        font-size: 1.125rem;
+        /* text-lg instead of text-xl */
+    }
+
+    .mobile-hide {
+        display: none !important;
+    }
 }
