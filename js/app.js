@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const icon = link.querySelector('span.material-symbols-outlined');
                 if (icon && icon.textContent === 'login') {
                     icon.textContent = 'logout';
-                    icon.title = 'Logout';
+                    icon.title = 'Cerrar Sesión';
                     link.href = "#";
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="text-xs text-slate-500 mb-4 line-clamp-1">${product.descripcion || ''}</p>
                     <button onclick="addToCart('${product.id_producto || product.id}', '${product.nombre}', ${product.precio}, '${imageUrl}')" class="w-full bg-slate-900 dark:bg-slate-800 hover:bg-primary text-white py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all">
                         <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-                        Add to Cart
+                        Añadir al Carrito
                     </button>
                 </div>
             </div>`;
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
     } catch (error) {
-        console.error("Error loading products:", error);
+        console.error("Error al cargar productos:", error);
         productsGrid.innerHTML = '<p class="text-red-500 col-span-full text-center py-12">Error al cargar productos. Por favor, intenta de nuevo.</p>';
     }
 });
@@ -181,9 +181,9 @@ window.updateCartCount = function () {
 
     cartButtons.forEach(btn => {
         // Try to find the text node or create one
-        let textNode = [...btn.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.includes('Cart'));
+        let textNode = [...btn.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.includes('Carrito'));
         if (textNode) {
-            textNode.textContent = ` Cart (${totalItems})`;
+            textNode.textContent = ` Carrito (${totalItems})`;
         }
     });
 };

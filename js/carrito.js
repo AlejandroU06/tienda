@@ -27,7 +27,7 @@ function renderCart() {
         if (cartCard) cartCard.classList.add('hidden');
         summaryContainer.classList.add('hidden');
         emptyMessage.classList.remove('hidden');
-        if (cartTitle) cartTitle.textContent = "Cart Items (0)";
+        if (cartTitle) cartTitle.textContent = "Artículos en el Carrito (0)";
         return;
     }
 
@@ -51,7 +51,7 @@ function renderCart() {
                 <div class="flex justify-between items-start">
                     <div>
                         <h4 class="font-bold text-slate-900 dark:text-slate-100">${item.nombre}</h4>
-                        <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">NexusStore Item</p>
+                        <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Artículo de NexusStore</p>
                     </div>
                     <p class="font-black text-lg">$${item.precio.toFixed(2)}</p>
                 </div>
@@ -66,7 +66,7 @@ function renderCart() {
                     <button onclick="removeFromCart('${item.id}')"
                         class="flex items-center gap-1 text-xs font-bold text-red-500 hover:text-red-600 transition-colors uppercase tracking-tight">
                         <span class="material-symbols-outlined text-[18px]">delete</span>
-                        Remove
+                        Eliminar
                     </button>
                 </div>
             </div>
@@ -77,7 +77,7 @@ function renderCart() {
     // Update Title
     if (cartTitle) {
         const totalItems = cart.reduce((sum, item) => sum + item.cantidad, 0);
-        cartTitle.textContent = `Cart Items (${totalItems})`;
+        cartTitle.textContent = `Artículos en el Carrito (${totalItems})`;
     }
 
     // Update Summary

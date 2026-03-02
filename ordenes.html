@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="es">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Purchase Order History - NexusStore</title>
+    <title>Historial de Pedidos - NexusStore</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         <h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-none">NexusStore</h1>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">Customer Portal</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">Portal del Cliente</p>
                     </div>
                 </div>
             </div>
@@ -35,19 +35,19 @@
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                     href="index.html">
                     <span class="material-symbols-outlined text-[24px]">home</span>
-                    <span class="text-sm font-medium">Home</span>
+                    <span class="text-sm font-medium">Inicio</span>
                 </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                     href="categorias.html">
                     <span class="material-symbols-outlined text-[24px]">category</span>
-                    <span class="text-sm font-medium">Categories</span>
+                    <span class="text-sm font-medium">Categorías</span>
                 </a>
 
 
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold"
                     href="ordenes.html">
                     <span class="material-symbols-outlined text-[24px]">history</span>
-                    <span class="text-sm">Orders</span>
+                    <span class="text-sm">Órdenes</span>
                 </a>
             </nav>
             <div class="p-4 border-t border-slate-200 dark:border-slate-800">
@@ -69,13 +69,13 @@
             <header
                 class="h-16 flex-shrink-0 flex items-center justify-between px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
                 <div class="flex items-center gap-4 flex-1">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Purchase Order History</h2>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Historial de Pedidos</h2>
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="relative">
                         <input
                             class="bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 pl-10 pr-4 text-sm w-64 focus:ring-2 focus:ring-primary/20"
-                            placeholder="Search orders..." type="text" />
+                            placeholder="Buscar pedidos..." type="text" />
                         <span
                             class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
                     </div>
@@ -87,12 +87,12 @@
                     <div class="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
                     <a href="login.html" id="header-login-link"
                         class="hidden text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                        Sign In
+                        Iniciar Sesión
                     </a>
                     <a href="carrito.html"
                         class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">shopping_cart</span>
-                        Cart (0)
+                        Carrito (0)
                     </a>
                 </div>
             </header>
@@ -111,7 +111,7 @@
         <div
             class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
             <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <h3 class="text-xl font-bold" id="modal-order-number">Detalles de la Orden</h3>
+                <h3 class="text-xl font-bold" id="modal-order-number">Detalles del Pedido</h3>
                 <button id="close-modal"
                     class="size-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
                     <span class="material-symbols-outlined">close</span>

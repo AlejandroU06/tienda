@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
     } catch (error) {
-        console.error("Error loading categories:", error);
+        console.error("Error al cargar categorías:", error);
         categoriesGrid.innerHTML = '<p class="text-red-500 col-span-full text-center py-12">Error al cargar categorías. Por favor, intenta de nuevo.</p>';
     }
 });

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 card.className = "bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 flex items-center justify-between";
                 card.innerHTML = `
                     <div>
-                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Orden #${orders.length - index}</h4>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Pedido #${orders.length - index}</h4>
                         <p class="text-sm text-slate-500 font-medium mt-1">Realizada el ${date}</p>
                     </div>
                     <div class="flex items-center gap-8">
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Reset and show loading
         itemsContainer.innerHTML = '<p class="text-slate-500 py-8 text-center">Cargando detalles...</p>';
-        document.getElementById('modal-order-number').textContent = `Detalles de la Orden #${orderNum}`;
+        document.getElementById('modal-order-number').textContent = `Detalles del Pedido #${orderNum}`;
         document.getElementById('modal-order-date').textContent = new Date(order.fecha).toLocaleDateString();
         document.getElementById('modal-order-total').textContent = `$${order.total}`;
 
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const details = await db.getDetalleVenta(idVenta);
 
             if (!details || details.length === 0) {
-                itemsContainer.innerHTML = '<p class="text-slate-500 py-8 text-center">No se encontraron productos para esta orden.</p>';
+                itemsContainer.innerHTML = '<p class="text-slate-500 py-8 text-center">No se encontraron productos para este pedido.</p>';
                 return;
             }
 
