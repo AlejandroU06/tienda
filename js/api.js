@@ -72,6 +72,24 @@ export async function insertarCliente(clienteData) {
     }
 }
 
+export async function actualizarCliente(clienteId, clienteData) {
+    try {
+        const response = await fetch(`${API_URL}/rest/v1/cliente?id_cliente=eq.${encodeURIComponent(clienteId)}`, {
+            method: 'PATCH',
+            headers: {
+                ...headers,
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(clienteData)
+        });
+        if (!response.ok) throw new Error('Error al actualizar cliente');
+        return await response.json();
+    } catch (error) {
+        console.error('actualizarCliente error:', error);
+        throw error;
+    }
+}
+
 export async function getVentasByCliente(clienteId) {
     try {
         const url = `${API_URL}/rest/v1/venta?id_cliente=eq.${encodeURIComponent(clienteId)}&select=*`;

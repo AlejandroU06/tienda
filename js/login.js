@@ -74,8 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Success! Save session state
                     localStorage.setItem('clienteLogueado', JSON.stringify({
                         id: cliente.id_cliente || cliente.id,
+                        nombres: cliente.nombres,
+                        apellidos: cliente.apellidos,
                         nombre: (cliente.nombres || '') + ' ' + (cliente.apellidos || ''),
-                        email: cliente.email
+                        email: cliente.email,
+                        telefono: cliente.telefono
                     }));
                     showAlert('¡Sesión iniciada correctamente!', 'success');
                     setTimeout(() => {
