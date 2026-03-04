@@ -17,8 +17,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         categoriesGrid.innerHTML = "";
 
+        const imageMap = {
+            'electrónica': 'electronica.jpg',
+            'hogar': 'hogar.jpg',
+            'deportes': 'deporte.jpg',
+            'deporte': 'deporte.jpg',
+            'ropa': 'ropa.jpg'
+        };
+
         categorias.forEach(cat => {
-            const imageUrl = 'assets/imágenes/prueba.jpg';
+            const normalizedName = cat.nombre.toLowerCase().trim();
+            const fileName = imageMap[normalizedName] || 'prueba.jpg';
+            const imageUrl = `assets/imágenes/${fileName}`;
 
             const catHtml = `
             <div onclick="window.location.href='index.html?categoria=${cat.id_tipo_producto || cat.id}'" class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer bg-slate-100 dark:bg-slate-800 shadow-sm hover:shadow-xl transition-all duration-500">

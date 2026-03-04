@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         productsGrid.innerHTML = "";
 
         products.forEach(product => {
-            const imageUrl = 'assets/imágenes/prueba.jpg';
+            const imageUrl = product.imagen_url || 'assets/imágenes/prueba.jpg';
             const productHtml = `
             <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all group overflow-hidden">
                 <div class="aspect-square bg-slate-100 dark:bg-slate-800 relative">
