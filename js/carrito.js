@@ -51,7 +51,7 @@ function renderCart() {
                 <div class="flex justify-between items-start">
                     <div>
                         <h4 class="font-bold text-slate-900 dark:text-slate-100">${item.nombre}</h4>
-                        <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Artículo de NexusStore</p>
+                        <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Artículo de UFPStore</p>
                     </div>
                     <p class="font-black text-lg">$${item.precio.toFixed(2)}</p>
                 </div>
