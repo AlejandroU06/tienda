@@ -69,21 +69,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!productsGrid) return;
 
 
-    try {
-        productsGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12">Cargando productos...</p>';
-        const urlParams = new URLSearchParams(window.location.search);
-        const categoriaId = urlParams.get('categoria');
+    let allProducts = [];
 
-        const products = await api.getProductos(categoriaId);
+    function renderProducts(productsToRender) {
+        if (!productsGrid) return;
+        productsGrid.innerHTML = "";
 
-        if (!products || products.length === 0) {
-            productsGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12">No hay productos disponibles.</p>';
+        if (!productsToRender || productsToRender.length === 0) {
+            productsGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12">No hay productos que coincidan con tu búsqueda.</p>';
             return;
         }
 
-        productsGrid.innerHTML = "";
-
-        products.forEach(product => {
+        productsToRender.forEach(product => {
             const imageUrl = product.imagen_url || 'assets/imágenes/prueba.jpg';
             const productHtml = `
             <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all group overflow-hidden">
@@ -106,6 +103,33 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>`;
             productsGrid.insertAdjacentHTML('beforeend', productHtml);
         });
+    }
+
+    try {
+        productsGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12">Cargando productos...</p>';
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoriaId = urlParams.get('categoria');
+
+        allProducts = await api.getProductos(categoriaId);
+
+        if (!allProducts || allProducts.length === 0) {
+            productsGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center py-12">No hay productos disponibles.</p>';
+            return;
+        }
+
+        renderProducts(allProducts);
+
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase().trim();
+                const filtered = allProducts.filter(p =>
+                    p.nombre.toLowerCase().includes(term) ||
+                    (p.descripcion && p.descripcion.toLowerCase().includes(term))
+                );
+                renderProducts(filtered);
+            });
+        }
 
     } catch (error) {
         console.error("Error al cargar productos:", error);

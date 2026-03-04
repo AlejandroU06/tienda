@@ -12,29 +12,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById('orders-container');
 
     if (container) {
-        container.innerHTML = '<p class="text-slate-500 py-12 text-center">Cargando órdenes...</p>';
-        try {
-            const userId = userData.id || userData.id_cliente;
-            const orders = await db.getVentasByCliente(userId);
+        let allOrders = [];
 
-            if (!orders || orders.length === 0) {
+        function renderOrders(ordersToRender) {
+            container.innerHTML = '';
+            if (!ordersToRender || ordersToRender.length === 0) {
                 container.innerHTML = `
                     <div class="bg-white dark:bg-slate-900 rounded-xl p-12 text-center border border-slate-200 dark:border-slate-800 shadow-sm">
                         <span class="material-symbols-outlined text-[48px] text-slate-300 dark:text-slate-700 mb-4 block">receipt_long</span>
                         <h4 class="font-bold text-lg mb-2">No se encontraron órdenes</h4>
-                        <p class="text-slate-500 text-sm">Parece que aún no has realizado ninguna compra.</p>
+                        <p class="text-slate-500 text-sm">Prueba con otro término de búsqueda.</p>
                     </div>`;
                 return;
             }
 
-            container.innerHTML = '';
-            orders.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).forEach((order, index) => {
+            ordersToRender.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).forEach((order, index) => {
                 const date = new Date(order.fecha).toLocaleDateString();
                 const card = document.createElement('div');
                 card.className = "bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 flex items-center justify-between";
                 card.innerHTML = `
                     <div>
-                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Pedido #${orders.length - index}</h4>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Pedido #${allOrders.length - allOrders.indexOf(order)}</h4>
                         <p class="text-sm text-slate-500 font-medium mt-1">Realizada el ${date}</p>
                     </div>
                     <div class="flex items-center gap-8">
@@ -48,10 +46,43 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </div>`;
 
                 const viewBtn = card.querySelector('.view-details-btn');
-                viewBtn.addEventListener('click', () => showOrderDetails(order, orders.length - index));
+                viewBtn.addEventListener('click', () => showOrderDetails(order, allOrders.length - allOrders.indexOf(order)));
 
                 container.appendChild(card);
             });
+        }
+
+        try {
+            const userId = userData.id || userData.id_cliente;
+            allOrders = await db.getVentasByCliente(userId);
+
+            if (!allOrders || allOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white dark:bg-slate-900 rounded-xl p-12 text-center border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <span class="material-symbols-outlined text-[48px] text-slate-300 dark:text-slate-700 mb-4 block">receipt_long</span>
+                        <h4 class="font-bold text-lg mb-2">No se encontraron órdenes</h4>
+                        <p class="text-slate-500 text-sm">Parece que aún no has realizado ninguna compra.</p>
+                    </div>`;
+                return;
+            }
+
+            renderOrders(allOrders);
+
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase().trim();
+                    const filtered = allOrders.filter(order => {
+                        const date = new Date(order.fecha).toLocaleDateString().toLowerCase();
+                        const orderNum = (allOrders.length - allOrders.indexOf(order)).toString();
+                        return orderNum.includes(term) ||
+                            order.total.toString().includes(term) ||
+                            date.includes(term) ||
+                            (order.estado && order.estado.toLowerCase().includes(term));
+                    });
+                    renderOrders(filtered);
+                });
+            }
         } catch (e) {
             console.error(e);
             container.innerHTML = '<p class="text-red-500 py-12 text-center">Error al cargar las órdenes.</p>';
