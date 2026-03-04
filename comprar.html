@@ -186,6 +186,88 @@
             </div>
         </main>
     </div>
+    <!-- Payment Method Modal -->
+    <div id="payment-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div
+                class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+                <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                    <h3 class="text-xl font-bold">Método de Pago</h3>
+                    <button type="button" id="close-modal"
+                        class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <div class="p-6 space-y-4">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Selecciona cómo deseas finalizar tu compra:
+                    </p>
+
+                    <div class="grid grid-cols-1 gap-3">
+                        <!-- Option: Card -->
+                        <label
+                            class="relative flex items-center p-4 cursor-pointer rounded-xl border-2 border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all peer-checked:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                            <input type="radio" name="payment-method" value="TARJETA" class="sr-only">
+                            <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg mr-4">
+                                <span
+                                    class="material-symbols-outlined text-blue-600 dark:text-blue-400">credit_card</span>
+                            </div>
+                            <div class="flex-1">
+                                <span class="block font-bold">Tarjeta</span>
+                                <span class="block text-xs text-slate-500">Crédito o Débito</span>
+                            </div>
+                            <div class="hidden has-[:checked]:block">
+                                <span class="material-symbols-outlined text-primary">check_circle</span>
+                            </div>
+                        </label>
+
+                        <!-- Option: Transfer -->
+                        <label
+                            class="relative flex items-center p-4 cursor-pointer rounded-xl border-2 border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                            <input type="radio" name="payment-method" value="TRANSFERENCIA" class="sr-only">
+                            <div class="bg-emerald-100 dark:bg-emerald-900/30 p-2 rounded-lg mr-4">
+                                <span
+                                    class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">account_balance</span>
+                            </div>
+                            <div class="flex-1">
+                                <span class="block font-bold">Transferencia</span>
+                                <span class="block text-xs text-slate-500">PSE / Bancolombia</span>
+                            </div>
+                            <div class="hidden has-[:checked]:block">
+                                <span class="material-symbols-outlined text-primary">check_circle</span>
+                            </div>
+                        </label>
+
+                        <!-- Option: Cash -->
+                        <label
+                            class="relative flex items-center p-4 cursor-pointer rounded-xl border-2 border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                            <input type="radio" name="payment-method" value="EFECTIVO" class="sr-only">
+                            <div class="bg-amber-100 dark:bg-amber-900/30 p-2 rounded-lg mr-4">
+                                <span
+                                    class="material-symbols-outlined text-amber-600 dark:text-amber-400">payments</span>
+                            </div>
+                            <div class="flex-1">
+                                <span class="block font-bold">Efectivo</span>
+                                <span class="block text-xs text-slate-500">Punto de Pago / Contraentrega</span>
+                            </div>
+                            <div class="hidden has-[:checked]:block">
+                                <span class="material-symbols-outlined text-primary">check_circle</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/30">
+                    <button type="button" id="confirm-payment" disabled
+                        class="w-full py-4 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale disabled:scale-100 disabled:shadow-none">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="js/app.js"></script>
     <script type="module" src="js/comprar.js"></script>
 </body>

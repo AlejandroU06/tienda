@@ -39,10 +39,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // 2. Form Submission and "Save Info" logic
+    const paymentModal = document.getElementById('payment-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const confirmPaymentBtn = document.getElementById('confirm-payment');
+    const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
+    let selectedMethod = null;
+
     if (checkoutForm) {
-        checkoutForm.addEventListener('submit', async (e) => {
+        checkoutForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            // Show the modal instead of proceeding immediately
+            if (paymentModal) {
+                paymentModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent scroll
+            }
+        });
+    }
+
+    // Modal Control: Close
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            if (paymentModal) {
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scroll
+            }
+        });
+    }
+
+    // Modal Style: Enable "Aceptar" when a method is selected
+    paymentMethods.forEach(method => {
+        method.addEventListener('change', (e) => {
+            selectedMethod = e.target.value;
+            if (confirmPaymentBtn) {
+                confirmPaymentBtn.disabled = false;
+            }
+        });
+    });
+
+    // Final Confirmation Logic
+    if (confirmPaymentBtn) {
+        confirmPaymentBtn.addEventListener('click', async () => {
+            console.log("Processing payment with method:", selectedMethod);
+
+            // 1. Handle "Save Info" logic if checked
             if (saveInfoCheckbox && saveInfoCheckbox.checked && currentClient) {
                 const updatedData = {
                     nombres: document.getElementById('firstname').value.trim(),
@@ -71,11 +111,23 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
 
-            // Here you would normally proceed to payment gateway or order creation
-            if (window.showToast) {
-                window.showToast('¡Información guardada! Procesando pedido...', 'success');
+            // 2. Finalize: Show success message and redirect
+            if (paymentModal) {
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = '';
             }
-            // Optional: window.location.href = 'index.html'; // Or success page
+
+            if (window.showToast) {
+                window.showToast(`¡Pedido procesado con ${selectedMethod}! Redirigiendo...`, 'success');
+            } else {
+                alert(`¡Pedido procesado con ${selectedMethod}!`);
+            }
+
+            // Clean cart and redirect
+            localStorage.removeItem('carrito');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
         });
     }
 
