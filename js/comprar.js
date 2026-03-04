@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
                 if (window.showToast) {
-                    window.showToast(`¡Pedido #${idVenta} procesado! Redirigiendo...`, 'success');
+                    window.showToast('Tu compra ha sido procesada con exito', 'success');
                 }
 
                 localStorage.removeItem('carrito');
