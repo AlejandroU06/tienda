@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 2. Form Submission and "Save Info" logic
+    // 2. Form Submission and Validation Logic
     const paymentModal = document.getElementById('payment-modal');
     const closeModalBtn = document.getElementById('close-modal');
     const confirmPaymentBtn = document.getElementById('confirm-payment');
@@ -119,60 +119,107 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Final Confirmation Logic
     if (confirmPaymentBtn) {
         confirmPaymentBtn.addEventListener('click', async () => {
-            console.log("Processing payment with method:", selectedMethod);
+            if (!selectedMethod) return;
 
-            // 1. Handle "Save Info" logic if checked
-            if (saveInfoCheckbox && saveInfoCheckbox.checked && currentClient) {
-                const updatedData = {
-                    nombres: document.getElementById('firstname').value.trim(),
-                    apellidos: document.getElementById('lastname').value.trim(),
-                    telefono: document.getElementById('phone').value.trim(),
-                    direccion: document.getElementById('address').value.trim(),
-                    documento: document.getElementById('document-id').value.trim()
+            confirmPaymentBtn.disabled = true;
+            confirmPaymentBtn.innerHTML = '<span class="animate-spin material-symbols-outlined inline-block align-middle mr-2">sync</span> Procesando...';
+
+            const cart = JSON.parse(localStorage.getItem('carrito') || '[]');
+            let subtotalVal = 0;
+            cart.forEach(item => subtotalVal += (item.precio * item.cantidad));
+            const tax = subtotalVal * 0.08;
+            const total = subtotalVal + tax;
+
+            try {
+                // 1. Create Order in 'venta' table
+                const ventaData = {
+                    id_cliente: currentClient.id_cliente || currentClient.id,
+                    total: total,
+                    metodo_pago: selectedMethod,
+                    estado: selectedMethod === 'EFECTIVO' ? 'PENDIENTE' : 'PAGADA',
+                    fecha: new Date().toISOString()
                 };
 
-                try {
-                    const clientId = currentClient.id_cliente || currentClient.id;
-                    await api.actualizarCliente(clientId, updatedData);
-                    console.log("Profile updated successfully");
+                const insertedVentaArray = await api.insertarVenta(ventaData);
+                if (!insertedVentaArray || insertedVentaArray.length === 0) throw new Error("Error creating order");
 
-                    // Update localStorage too
-                    localStorage.setItem('clienteLogueado', JSON.stringify({
-                        ...JSON.parse(localStorage.getItem('clienteLogueado')),
-                        nombres: updatedData.nombres,
-                        apellidos: updatedData.apellidos,
-                        nombre: `${updatedData.nombres} ${updatedData.apellidos}`,
-                        telefono: updatedData.telefono
-                    }));
+                const idVenta = insertedVentaArray[0].id_venta;
 
-                } catch (error) {
-                    console.error("Error updating profile:", error);
+                // 2. Insert Order Details in 'detalle_venta'
+                for (const item of cart) {
+                    const detalleData = {
+                        id_venta: idVenta,
+                        id_producto: item.id_producto || item.id,
+                        cantidad: item.cantidad,
+                        precio_unitario: item.precio,
+                        subtotal: item.precio * item.cantidad
+                    };
+                    await api.insertarDetalleVenta(detalleData);
                 }
-            }
 
-            // 2. Finalize: Show success message and redirect
-            if (paymentModal) {
-                paymentModal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
+                // 3. Conditional Profile Update
+                if (saveInfoCheckbox && saveInfoCheckbox.checked && currentClient) {
+                    const formValues = {
+                        nombres: document.getElementById('firstname').value.trim(),
+                        apellidos: document.getElementById('lastname').value.trim(),
+                        telefono: document.getElementById('phone').value.trim(),
+                        direccion: document.getElementById('address').value.trim(),
+                        documento: document.getElementById('document-id').value.trim()
+                    };
 
-            if (window.showToast) {
-                window.showToast(`¡Pedido procesado con ${selectedMethod}! Redirigiendo...`, 'success');
-            } else {
-                alert(`¡Pedido procesado con ${selectedMethod}!`);
-            }
+                    // Check for differences before updating API
+                    const hasChanges =
+                        formValues.nombres !== (currentClient.nombres || '') ||
+                        formValues.apellidos !== (currentClient.apellidos || '') ||
+                        formValues.telefono !== (currentClient.telefono || '') ||
+                        formValues.direccion !== (currentClient.direccion || '') ||
+                        formValues.documento !== (currentClient.documento || '');
 
-            // Clean cart and redirect
-            localStorage.removeItem('carrito');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1500);
+                    if (hasChanges) {
+                        const clientId = currentClient.id_cliente || currentClient.id;
+                        await api.actualizarCliente(clientId, formValues);
+                        console.log("Profile updated with changes");
+
+                        // Update local storage
+                        localStorage.setItem('clienteLogueado', JSON.stringify({
+                            ...JSON.parse(localStorage.getItem('clienteLogueado')),
+                            ...formValues,
+                            nombre: `${formValues.nombres} ${formValues.apellidos}`
+                        }));
+                    }
+                }
+
+                // 4. Finalize
+                if (paymentModal) {
+                    paymentModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
+
+                if (window.showToast) {
+                    window.showToast(`¡Pedido #${idVenta} procesado! Redirigiendo...`, 'success');
+                }
+
+                localStorage.removeItem('carrito');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+
+            } catch (error) {
+                console.error("Critical error in checkout:", error);
+                if (window.showToast) {
+                    window.showToast('Error al procesar el pedido. Intente de nuevo.', 'error');
+                } else {
+                    alert('Error al procesar el pedido.');
+                }
+                confirmPaymentBtn.disabled = false;
+                confirmPaymentBtn.textContent = 'Aceptar';
+            }
         });
     }
 
     // 3. Order Summary Logic
     function renderOrderSummary() {
-        const cart = JSON.parse(localStorage.getItem('carrito') || '[]');
+        const cartItems = JSON.parse(localStorage.getItem('carrito') || '[]');
         const container = document.getElementById('order-summary-items');
         const countBadge = document.getElementById('order-items-count');
         const subtotalEl = document.getElementById('summary-subtotal');
@@ -185,10 +232,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         let subtotal = 0;
         let totalItems = 0;
 
-        if (cart.length === 0) {
+        if (cartItems.length === 0) {
             container.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">Tu carrito está vacío</p>';
         } else {
-            cart.forEach(item => {
+            cartItems.forEach(item => {
                 const itemTotal = item.precio * item.cantidad;
                 subtotal += itemTotal;
                 totalItems += item.cantidad;
