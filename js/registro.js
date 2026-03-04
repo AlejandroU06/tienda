@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const nombres = firstnameInput.value.trim();
         const apellidos = lastnameInput.value.trim();
         const email = emailInput.value.trim();
+        const documento = document.getElementById('document-id').value.trim();
+        const direccion = document.getElementById('address').value.trim();
         const telefono = passwordInput.value.trim(); // Phone as password
         const confirmPassword = confirmPasswordInput.value.trim();
 
@@ -63,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 nombres,
                 apellidos,
                 email,
+                documento,
+                direccion,
                 telefono
             };
 
