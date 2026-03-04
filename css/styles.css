@@ -24,8 +24,8 @@ input[type="tel"]:focus,
 input[type="email"]:focus,
 select:focus {
     outline: none;
-    border-color: #137fec;
-    box-shadow: 0 0 0 3px rgba(19, 127, 236, 0.2);
+    border-color: #aa1916;
+    box-shadow: 0 0 0 3px rgba(170, 25, 22, 0.2);
 }
 
 /* Toast Animations */
