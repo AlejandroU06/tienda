@@ -45,11 +45,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     const paymentMethods = document.querySelectorAll('input[name="payment-method"]');
     let selectedMethod = null;
 
+    function validateForm() {
+        const requiredIds = ['firstname', 'lastname', 'email', 'phone', 'address', 'document-id'];
+        let firstEmpty = null;
+        let isValid = true;
+
+        requiredIds.forEach(id => {
+            const input = document.getElementById(id);
+            if (!input) return;
+
+            if (!input.value.trim()) {
+                isValid = false;
+                input.classList.add('error-field');
+                if (!firstEmpty) firstEmpty = input;
+
+                // Remove error style when user starts typing
+                input.oninput = () => {
+                    input.classList.remove('error-field');
+                    input.oninput = null; // Remove this listener
+                };
+            } else {
+                input.classList.remove('error-field');
+            }
+        });
+
+        if (!isValid) {
+            if (window.showToast) {
+                window.showToast('Por favor, completa todos los campos obligatorios.', 'error');
+            } else {
+                alert('Por favor, completa todos los campos obligatorios.');
+            }
+            if (firstEmpty) firstEmpty.focus();
+        }
+
+        return isValid;
+    }
+
     if (checkoutForm) {
         checkoutForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Show the modal instead of proceeding immediately
+            // Validate before showing modal
+            if (!validateForm()) return;
+
+            // Show the modal if valid
             if (paymentModal) {
                 paymentModal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden'; // Prevent scroll
